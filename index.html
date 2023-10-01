@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" type="text" id="genaretor" readonly>
+                    <button class="generate-btn" id="pinGenarate">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                    <div class="input-section half-width">
+                        <input class="form-control" type="text" name="display" readonly>
+                        <div class="numbers">
+                            <div class="calc-body">
+                                <div class="calc-button-row">
+                                <div class="button" onclick="addToDisplay('7')">7</div>
+                                <div class="button" onclick="addToDisplay('8')">8</div>
+                                <div class="button" onclick="addToDisplay('9')">9</div>
+                                </div>
+                                <div class="calc-button-row">
+                                <div class="button" onclick="addToDisplay('4')">4</div>
+                                <div class="button" onclick="addToDisplay('5')">5</div>
+                                <div class="button" onclick="addToDisplay('6')">6</div>
+                                </div>
+                                <div class="calc-button-row">
+                                <div class="button" onclick="addToDisplay('1')">1</div>
+                                <div class="button" onclick="addToDisplay('2')">2</div>
+                                <div class="button" onclick="addToDisplay('3')">3</div>
+                                </div>
+                                <div class="calc-button-row">
+                                    <div class="button" onclick="removeLast()">&lt;</div>
+                                    <div class="button" onclick="addToDisplay('0')">0</div>
+                                    <div class="button" onclick="removeAll()">C</div>
+                                </div>
+                                <div>
+                                    <button type="submit" class="submit-btn" id="match" onclick="submitBtn()">Submit</button>
+                                    <p class="action-left">3 try left</p>
+                                </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section">
+            <p class="notify" id="navetive">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="positive">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+    <script>
+        // pin code display
+        function addToDisplay(value){
+            var displayElement = document.getElementsByName("display")[0];
+            displayElement.value += value;
+        }
+
+        function removeLast() {
+            var displayElement = document.getElementsByName("display")[0];
+            displayElement.value = displayElement.value.slice(0, -1);
+        }
+        function removeAll(){
+            var displayElement = document.getElementsByName("display")[0];
+            displayElement.value = "";
+        }
+        // pin genarate
+            document.getElementById('pinGenarate').addEventListener('click', function(){
+            var number = Math.floor(Math.random()*(9999 - 1000)) + 1000;
+            document.getElementById('genaretor').value = number;
+            })
+            
+            
+        
+        // pin checking
+        function submitBtn(){
+            let generateNumber = document.getElementById('genaretor');
+            let generateNumberValue = generateNumber.value;
+
+            let displayNumber = document.getElementsByName('display')[0];
+            let displayNumberValue = displayNumber.value;
+
+            if(generateNumberValue == displayNumberValue){
+                document.getElementById('positive').style.display = 'block';
+                document.getElementById('navetive').style.display = 'none';
+            }
+            else{
+                document.getElementById('positive').style.display = 'none';
+                document.getElementById('navetive').style.display = 'block';
+            }
+        }
+        
+
+    </script>
+</body>
+</html>
